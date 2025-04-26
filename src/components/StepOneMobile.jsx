@@ -45,8 +45,11 @@ export default function MobileOnboardingSteps() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-between max-w-screen-md mx-auto h-screen bg-tertiary p-5 relative">
-      {/* Top Logo and Skip */}
+  
+
+      <div className="bg-tertiary">
+          <div className="flex flex-col items-center justify-between max-w-screen-md mx-auto h-screen md:h-none bg-tertiary p-5 relative">
+          {/* Top Logo and Skip */}
       <div className="flex justify-end items-center w-full mb-6 ">
         <img src={logo} alt="Logo" className="w-[50px] hidden h-[50px]" />
         <p onClick={handleSkip} className="text-white cursor-pointer mb-[1.7rem] mt-[1rem] flex justify-end items-end font-normal">Skip</p>
@@ -95,5 +98,7 @@ export default function MobileOnboardingSteps() {
       </div>
 
     </div>
+      </div>
+      
   );
 }

@@ -45,7 +45,7 @@ export default function MobileOnboardingSteps() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-between max-w-screen-md mx-auto h-screen bg-tertiary p-5 relative">
+    <div className="flex flex-col items-center justify-between max-w-screen-md mx-auto !h-screen bg-tertiary p-5 relative">
       {/* Top Logo and Skip */}
       <div className="flex justify-end items-center w-full mb-6 ">
         <img src={logo} alt="Logo" className="w-[50px] hidden h-[50px]" />
@@ -88,7 +88,7 @@ export default function MobileOnboardingSteps() {
       <div className="w-full flex justify-center">
         <button
           onClick={handleNext}
-          className="h-[54px] w-[100%] bg-primary text-white rounded-full mb-[1.5rem] text-sm font-semibold"
+          className="h-[64px] w-[100%] bg-primary text-white rounded-full mb-[1.5rem] text-sm font-semibold"
         >
           {currentStep === steps.length - 1 ? "Get Started" : "Get Started"}
         </button>

@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 export default function DesktopOnboardingSteps() {
     return (
 <>
+<div className="bg-tertiary h-screen">
+
 <div className="max-w-screen-2xl mx-auto bg-tertiary p-[2.6rem]">
      <div className="flex items-center justify-center mb-[1.7rem]">
 <div className="flex justify-between items-start w-full ">
@@ -55,6 +57,8 @@ export default function DesktopOnboardingSteps() {
 
 
         </div>
+</div>
+
 </>
  
     );
