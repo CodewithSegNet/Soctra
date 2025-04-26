@@ -30,13 +30,15 @@ const steps = [
 
 export default function MobileOnboardingSteps() {
   const [currentStep, setCurrentStep] = useState(0);
+  const [direction, setDirection] = useState(0); // 👉 -1 for left, 1 for right
   const navigate = useNavigate();
 
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
+      setDirection(1); // next = swipe left
       setCurrentStep((prev) => prev + 1);
     } else {
-      navigate("/homepage"); 
+      navigate("/homepage");
     }
   };
 
@@ -44,6 +46,20 @@ export default function MobileOnboardingSteps() {
     navigate("/homepage");
   };
 
+  const variants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 300 : -300,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      x: direction > 0 ? -300 : 300,
+      opacity: 0,
+    }),
+  };
   return (
     <div className="bg-tertiary">
       <div className="flex flex-col items-center justify-between max-w-screen-md mx-auto h-screen md:h-none bg-tertiary p-5 relative">
@@ -58,24 +74,26 @@ export default function MobileOnboardingSteps() {
 
         {/* AnimatePresence for Card */}
         <div className="flex items-center justify-center w-full h-[400px] relative">
-          <AnimatePresence mode="wait">
-            <motion.div
+          <AnimatePresence mode="wait" custom={direction}>
+          <motion.div
               key={currentStep}
-              initial={{ x: 300, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -300, opacity: 0 }}
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
               transition={{ type: "spring", duration: 0.6 }}
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
               onDragEnd={(event, info) => {
                 if (info.offset.x < -100 && currentStep < steps.length - 1) {
-                  // Swipe left → next step
+                  setDirection(1);
                   setCurrentStep((prev) => prev + 1);
                 } else if (info.offset.x > 100 && currentStep > 0) {
-                  // Swipe right → previous step
+                  setDirection(-1);
                   setCurrentStep((prev) => prev - 1);
                 }
-                // ⚡ Swipe should NEVER navigate to homepage
+                // No navigation on swipe
               }}
             >
               <Card
