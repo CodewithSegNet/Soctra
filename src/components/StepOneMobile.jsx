@@ -45,60 +45,70 @@ export default function MobileOnboardingSteps() {
   };
 
   return (
-  
+    <div className="bg-tertiary">
+      <div className="flex flex-col items-center justify-between max-w-screen-md mx-auto h-screen md:h-none bg-tertiary p-5 relative">
 
-      <div className="bg-tertiary">
-          <div className="flex flex-col items-center justify-between max-w-screen-md mx-auto h-screen md:h-none bg-tertiary p-5 relative">
-          {/* Top Logo and Skip */}
-      <div className="flex justify-end items-center w-full mb-6 ">
-        <img src={logo} alt="Logo" className="w-[50px] hidden h-[50px]" />
-        <p onClick={handleSkip} className="text-white cursor-pointer mb-[1.7rem] mt-[1rem] flex justify-end items-end font-normal">Skip</p>
-      </div>
+        {/* Top Logo and Skip */}
+        <div className="flex justify-end items-center w-full mb-6">
+          <img src={logo} alt="Logo" className="w-[50px] hidden h-[50px]" />
+          <p onClick={handleSkip} className="text-white cursor-pointer mb-[1.7rem] mt-[1rem] flex justify-end items-end font-normal">
+            Skip
+          </p>
+        </div>
 
+        {/* AnimatePresence for Card */}
+        <div className="flex items-center justify-center w-full h-[400px] relative">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentStep}
+              initial={{ x: 300, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -300, opacity: 0 }}
+              transition={{ type: "spring", duration: 0.6 }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              onDragEnd={(event, info) => {
+                if (info.offset.x < -100 && currentStep < steps.length - 1) {
+                  // Swipe left → next step
+                  setCurrentStep((prev) => prev + 1);
+                } else if (info.offset.x > 100 && currentStep > 0) {
+                  // Swipe right → previous step
+                  setCurrentStep((prev) => prev - 1);
+                }
+                // ⚡ Swipe should NEVER navigate to homepage
+              }}
+            >
+              <Card
+                headeer={steps[currentStep].headeer}
+                text={steps[currentStep].text}
+                imageSrc={steps[currentStep].imageSrc}
+                altText={steps[currentStep].altText}
+              />
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
-      {/* AnimatePresence for Card */}
-      <div className="flex items-center justify-center w-full h-[400px] relative">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentStep}
-            initial={{ x: 300, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: -300, opacity: 0 }}
-            transition={{ type: "spring", duration: 0.6 }}
-          >
-            <Card
-
-              headeer={steps[currentStep].headeer}
-              text={steps[currentStep].text}
-              imageSrc={steps[currentStep].imageSrc}
-              altText={steps[currentStep].altText}
+        {/* Progress Dots */}
+        <div className="flex mb-[3rem] mt-[1rem] rounded-full">
+          {steps.map((_, index) => (
+            <div
+              key={index}
+              className={`w-6 h-[4px] ${index === currentStep ? "bg-primary rounded-full" : "bg-newgray"}`}
             />
-          </motion.div>
-        </AnimatePresence>
-      </div>
+          ))}
+        </div>
 
-      {/* Progress Dots */}
-      <div className="flex mb-[3rem] mt-[1rem] rounded-full">
-        {steps.map((_, index) => (
-          <div
-            key={index}
-            className={`w-6 h-[4px] ${index === currentStep ? "bg-primary rounded-full" : "bg-newgray"}`}
-          />
-        ))}
-      </div>
+        {/* Button */}
+        <div className="w-full flex justify-center">
+          <button
+            onClick={handleNext}
+            className="h-[54px] w-[100%] bg-primary text-white rounded-full mb-[1.5rem] text-sm font-semibold"
+          >
+            {currentStep === steps.length - 1 ? "Get Started" : "Get Started"}
+          </button>
+        </div>
 
-      {/* Button */}
-      <div className="w-full flex justify-center">
-        <button
-          onClick={handleNext}
-          className="h-[54px] w-[100%] bg-primary text-white rounded-full mb-[1.5rem] text-sm font-semibold"
-        >
-          {currentStep === steps.length - 1 ? "Finish" : "Get Started"}
-        </button>
       </div>
-
     </div>
-      </div>
-      
   );
 }
