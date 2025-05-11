@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Onboarding from "./components/Onboarding";
-import HomePage from "./layouts/Homepage";
+import SignIn from "./layouts/SignInMobile";
+import SignUp from "./layouts/SignUpMobile";
+
 import DesktopOnboardingSteps from "./components/StepOneDesktop";
 import MobileOnboardingSteps from "./components/StepOneMobile";
 
@@ -28,7 +30,9 @@ function App() {
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
         <Route path="/" element={isDesktop ? <DesktopOnboardingSteps /> : <MobileOnboardingSteps />} />
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUp />} />
+
       </Routes>
     </BrowserRouter>
   );

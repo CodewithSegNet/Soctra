@@ -30,7 +30,7 @@ const steps = [
 
 export default function MobileOnboardingSteps() {
   const [currentStep, setCurrentStep] = useState(0);
-  const [direction, setDirection] = useState(0); // 👉 -1 for left, 1 for right
+  const [direction, setDirection] = useState(0);
   const navigate = useNavigate();
 
   const handleNext = () => {
@@ -38,7 +38,7 @@ export default function MobileOnboardingSteps() {
       setDirection(1); // next = swipe left
       setCurrentStep((prev) => prev + 1);
     } else {
-      navigate("/homepage");
+      navigate("/sign-in");
     }
   };
 

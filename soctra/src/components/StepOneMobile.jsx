@@ -36,7 +36,7 @@ export default function MobileOnboardingSteps() {
     if (currentStep < steps.length - 1) {
       setCurrentStep((prev) => prev + 1);
     } else {
-      navigate("/homepage"); 
+      navigate("/sign-in"); 
     }
   };
 

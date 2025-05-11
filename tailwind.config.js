@@ -9,7 +9,7 @@ export default {
         tertiary: "#0D0D0D",
         regular: "#ffffff",
         regular2: "rgba(66, 96, 193, 0.2)",
-        regular3: "rgba(253, 150, 2, 0.2)",
+        regular3: "rgba(255, 255, 255, 0.6)",
         newgray: "#181818",
       },
       backgroundImage: {
