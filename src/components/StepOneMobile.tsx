@@ -70,7 +70,7 @@ export default function MobileOnboardingSteps() {
           <img src={logo} alt="Logo" className="w-[50px] hidden h-[50px]" />
           <p
             onClick={handleSkip}
-            className="text-white cursor-pointer mb-[1.7rem] mt-[1rem] flex justify-end items-end font-normal"
+            className="text-white cursor-pointer mb-[.6rem] mt-[.7rem] flex justify-end items-end font-normal"
           >
             Skip
           </p>
@@ -110,7 +110,7 @@ export default function MobileOnboardingSteps() {
         </div>
 
         {/* Progress Dots */}
-        <div className="flex mb-[3rem] mt-[1rem] rounded-full">
+        <div className="flex mb-[3rem] mt-[.6rem] rounded-full">
           {steps.map((_, index) => (
             <div
               key={index}
@@ -123,7 +123,7 @@ export default function MobileOnboardingSteps() {
         <div className="w-full flex justify-center">
           <button
             onClick={handleNext}
-            className="h-[54px] w-[100%] bg-primary text-white rounded-full mb-[1.5rem] text-sm font-semibold"
+            className="h-[54px] w-[100%] bg-primary text-white rounded-full mb-[1rem] text-sm font-semibold"
           >
             {currentStep === steps.length - 1 ? "Get Started" : "Get Started"}
           </button>
