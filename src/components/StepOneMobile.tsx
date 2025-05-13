@@ -62,7 +62,7 @@ export default function MobileOnboardingSteps() {
   };
   return (
     <div className="bg-tertiary">
-      <div className="flex flex-col items-center justify-between max-w-screen-md mx-auto h-screen md:h-none bg-tertiary p-5 relative">
+      <div className="flex flex-col items-center justify-between max-w-screen-md mx-auto !min-h-screen overflow-hidden md:h-none bg-tertiary p-5 relative">
 
         {/* Top Logo and Skip */}
         <div className="flex justify-end items-center w-full mb-6">
