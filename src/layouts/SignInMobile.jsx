@@ -61,11 +61,11 @@ const SignIn = ({ apiUrl }) => {
   };
 
   return (
-    <section className="bg-black text-white min-h-screen flex flex-col justify-evenly px-6">
-      <div className="">
-        <div className="mb-10">
-          <h3 className="text-[32px] font-bold mb-[16px]">Sign In to Soctral</h3>
-          <p className="text-base text-gray-300">
+ <section className="bg-black text-white h-screen flex flex-col">
+      <div className="flex flex-col h-full overflow-auto px-4 py-4">
+        <div className="pt-[3rem] mb-10">
+          <h3 className="text-2xl font-bold mb-[16px]">Sign In to Soctral</h3>
+          <p className="text-sm text-gray-300">
             Sign in with your phone number or email.
           </p>
         </div>
@@ -102,7 +102,7 @@ const SignIn = ({ apiUrl }) => {
             {/* Phone or Email Field */}
             {method === "phone" ? (
               <div className="space-y-2">
-                <label className="block text-xl mb-[16px] font-medium">Phone Number</label>
+                <label className="block text-base mb-[16px] font-medium">Phone Number</label>
                 <div className="flex items-center border border-gray-400 rounded-[90px] bg-black overflow-hidden">
                   <select
                     name="countryCode"
@@ -129,7 +129,7 @@ const SignIn = ({ apiUrl }) => {
               </div>
             ) : (
               <div className="space-y-2">
-                <label htmlFor="email" className="block text-xl mb-[16px] font-medium">
+                <label htmlFor="email" className="block text-base mb-[16px] font-medium">
                   Email Address
                 </label>
                 <input
@@ -146,7 +146,7 @@ const SignIn = ({ apiUrl }) => {
 
             {/* Password Field with Eye Icon */}
             <div className="space-y-2 relative">
-              <label htmlFor="password" className="block text-xl mb-[16px]  font-medium">
+              <label htmlFor="password" className="block text-base mb-[16px]  font-medium">
                 Password
               </label>
               <div className="flex items-center border border-gray-400 rounded-[90px] bg-black overflow-hidden">

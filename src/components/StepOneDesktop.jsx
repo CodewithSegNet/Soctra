@@ -1,66 +1,91 @@
-import logo from "../assets/soctraLogo.png"
-import Card from "../components/OnboardingDesktopCard"
+import { useState } from "react";
+import logo from "../assets/soctraLogo.png";
+import Card from "../components/OnboardingDesktopCard";
 import one from "../assets/1.svg";
 import two from "../assets/2.svg";
 import three from "../assets/3.svg";
-import { Link } from "react-router-dom";
-
+import SignIn from "../layouts/SignInDesktop";
+import SignUp from "../layouts/SignUpDesktop";
 
 export default function DesktopOnboardingSteps() {
-    return (
-<>
-<div className="bg-tertiary h-screen">
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
 
-<div className="max-w-screen-2xl mx-auto bg-tertiary p-[2.6rem]">
-     <div className="flex items-center justify-center mb-[1.7rem]">
-<div className="flex justify-between items-start w-full ">
-    
-    <img src={logo} alt="" className="w-[50px] h-[50px]" />
+  const openSignIn = () => {
+    setShowSignIn(true);
+    setShowSignUp(false);  // Close Sign Up when Sign In is opened
+  };
 
-    <p className="text-white cursor-pointer font-normal">Skip</p>
-</div>
+  const openSignUp = () => {
+    setShowSignUp(true);
+    setShowSignIn(false);  // Close Sign In when Sign Up is opened
+  };
 
+  return (
+    <>
+      <div className="bg-tertiary relative w-screen h-screen overflow-visible">
+        <div className="flex flex-col justify-between h-full max-w-screen-xl mx-auto px-4 py-4">
+          {/* Top Row */}
+          <div className="flex justify-between items-center w-full mb-2">
+            <img src={logo} alt="Soctra Logo" className="w-8 h-8 object-contain" />
+            <p className="text-white cursor-pointer text-xs font-normal">Skip</p>
+          </div>
+
+          {/* Welcome Text */}
+          <div className="mt-2">
+            <h1 className="text-white font-bold text-2xl sm:text-3xl mb-1">
+              Welcome to Soctral
+            </h1>
+            <p className="text-xs leading-4 text-white max-w-sm">
+              A Secure Marketplace for Buying and Selling Social Media Accounts,
+              Built on Trust and Transparency.
+            </p>
+          </div>
+
+          {/* Cards */}
+          <div className="flex flex-wrap justify-between items-stretch gap-3 mt-3 w-full">
+            <Card
+              imageSrc={one}
+              altText="Image 1"
+              text="Buy and Sell Social Media Accounts Without The Fear of Scam"
+            />
+            <Card
+              imageSrc={two}
+              altText="Image 2"
+              text="Your Payments Are Safely Held Until Satisfaction Is Guaranteed."
+            />
+            <Card
+              imageSrc={three}
+              altText="Image 3"
+              text="Connect and Trade Directly with Sellers and Buyers."
+            />
+          </div>
+
+          {/* Button */}
+          <div className="flex justify-center w-full mt-4">
+            <button
+              className="h-11 w-full max-w-xs bg-primary text-white rounded-full text-xs font-semibold"
+              onClick={openSignIn} // Open SignIn modal on click
+            >
+              Get Started
+            </button>
+          </div>
+        </div>
       </div>
 
-      <div className="w-[408px]">
-        <h1 className="text-white font-bold text-4xl mb-[.7rem]">Welcome to Soctral</h1>
-        <p className="text-xs leading-6 text-white">A Secure Marketplace for Buying and Selling Social Media Accounts, Built on Trust and Transparency.</p>
-      </div>
-
-      <div className="flex w-full justify-between gap-4 mt-8">
-          {/* Multiple Card components */}
-          <Card
-            imageSrc={one}
-            altText="Image 1"
-            text="Buy and Sell Social Media Accounts Without The Fear of Scam"
-          />
-          <Card
-            imageSrc={two}
-            altText="Image 2"
-            text="Your Payments Are Safely Held Until Satisfaction Is Guaranteed."
-          />
-          <Card
-            imageSrc={three}
-            altText="Image 3"
-            text="Connect and Trade Directly with Sellers and Buyers."
-          />
+      {/* Show SignIn Modal */}
+      {showSignIn && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex justify-center items-center px-4">
+          <SignIn apiUrl="http://your-api-url" onClose={() => setShowSignIn(false)} />
         </div>
+      )}
 
-<div className="flex justify-center w-full mx-auto items-center mt-[4rem]">
-
-  <button className="h-[64px] w-[30%] bg-primary text-white rounded-full text-sm font-semibold">
-    <Link>
-    Get Started
-    </Link>
-  </button>
-</div>
-
-
+      {/* Show SignUp Modal */}
+      {showSignUp && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex justify-center items-center px-4">
+          <SignUp apiUrl="http://your-api-url" onClose={() => setShowSignUp(false)} />
         </div>
-</div>
-
-</>
- 
-    );
-  }
-  
+      )}
+    </>
+  );
+}
