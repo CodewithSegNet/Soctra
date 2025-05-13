@@ -3,9 +3,9 @@ export default function Card({ imageSrc, altText, text, headeer }) {
         <>
 <div className="w-full">
 <div className="mx-auto">
-        <h2 className="text-left leading-6 text-white text-[1.82rem] mb-[18px] font-bold">{headeer}</h2>
+        <h2 className="text-left leading-6 text-white text-2xl mb-[15px] font-bold">{headeer}</h2>
         <div className=" w-[322px]">
-        <p className="text-left leading-6 text-white text-xs mb-[1rem]">{text}</p>
+        <p className="text-left leading-6 text-white text-xs mb-[.7rem]">{text}</p>
 
         </div>
         </div>
