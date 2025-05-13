@@ -35,7 +35,7 @@ export default function MobileOnboardingSteps() {
 
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
-      setDirection(1); // next = swipe left
+      setDirection(1);
       setCurrentStep((prev) => prev + 1);
     } else {
       navigate("/sign-in");
@@ -60,14 +60,18 @@ export default function MobileOnboardingSteps() {
       opacity: 0,
     }),
   };
+
   return (
-    <div className="bg-tertiary">
-      <div className="flex flex-col items-center justify-between max-w-screen-md mx-auto !min-h-screen overflow-hidden md:h-none bg-tertiary p-5 relative">
+    <div className="bg-tertiary min-h-screen h-[100dvh] overflow-hidden">
+      <div className="flex flex-col items-center justify-between max-w-screen-md mx-auto h-full bg-tertiary p-5 relative">
 
         {/* Top Logo and Skip */}
         <div className="flex justify-end items-center w-full mb-6">
           <img src={logo} alt="Logo" className="w-[50px] hidden h-[50px]" />
-          <p onClick={handleSkip} className="text-white cursor-pointer mb-[1.7rem] mt-[1rem] flex justify-end items-end font-normal">
+          <p
+            onClick={handleSkip}
+            className="text-white cursor-pointer mb-[1.7rem] mt-[1rem] flex justify-end items-end font-normal"
+          >
             Skip
           </p>
         </div>
@@ -75,7 +79,7 @@ export default function MobileOnboardingSteps() {
         {/* AnimatePresence for Card */}
         <div className="flex items-center justify-center w-full h-[400px] relative">
           <AnimatePresence mode="wait" custom={direction}>
-          <motion.div
+            <motion.div
               key={currentStep}
               custom={direction}
               variants={variants}
@@ -93,7 +97,6 @@ export default function MobileOnboardingSteps() {
                   setDirection(-1);
                   setCurrentStep((prev) => prev - 1);
                 }
-                // No navigation on swipe
               }}
             >
               <Card

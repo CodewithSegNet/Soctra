@@ -3,28 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="favicon/favicon.ico" />
-
-  <!-- Viewport settings with safe area support -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
+  
+  <!-- Viewport settings - removed viewport-fit=cover which can cause status bar issues -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <!-- iOS specific meta tags -->
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- Use default instead of black-translucent to avoid status bar issues -->
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-
-  <!-- Android theme color -->
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  
+  <!-- Android specific meta tag -->
+  <meta name="theme-color" content="#ffffff">
   <meta name="mobile-web-app-capable" content="yes">
-
+  
   <title>Soctral</title>
-
+  
   <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png" />
   <link rel="manifest" href="favicon/site.webmanifest" />
   <link rel="shortcut icon" href="favicon/favicon.ico" />
-
+  
   <style>
     /* Reset default margins and paddings */
     * {
@@ -32,58 +32,63 @@
       padding: 0;
       box-sizing: border-box;
     }
-
+    
+    /* Make HTML and body take full viewport height */
     html, body {
       height: 100%;
       width: 100%;
       overflow: hidden;
-      background-color: #ffffff;
+      background-color: #ffffff; /* Set your background color */
     }
-
+    
+    /* Root container with proper status bar handling */
     #root {
       height: 100%;
       width: 100%;
-      padding-top: env(safe-area-inset-top, 20px);
-      padding-bottom: env(safe-area-inset-bottom, 0px);
-      padding-left: env(safe-area-inset-left, 0px);
-      padding-right: env(safe-area-inset-right, 0px);
+      /* Create padding for status bar height on iOS */
+      padding-top: 20px; /* Default status bar height */
+      padding-top: env(safe-area-inset-top); /* For modern iOS */
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
       position: relative;
       overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+      -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
     }
-
+    
+    /* Use 100dvh (dynamic viewport height) for modern browsers */
     @supports (height: 100dvh) {
       body {
         height: 100dvh;
       }
     }
 
+    /* Status bar spacer for Android */
     .status-bar-spacer {
-      height: 24px;
+      height: 24px; /* Default Android status bar height */
       width: 100%;
-      background-color: #ffffff;
+      background-color: #ffffff; /* Match your app's theme */
       position: sticky;
       top: 0;
       z-index: 1000;
+    }
+
+    /* Only show Android spacer on Android devices */
+    @supports (-webkit-touch-callout: none) {
+      /* iOS device */
+      .status-bar-spacer {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
   <div id="root">
+    <!-- Status bar spacer for Android -->
     <div class="status-bar-spacer"></div>
-
+    
     <!-- Your app content here -->
   </div>
-
   <script type="module" src="/src/main.jsx"></script>
-
-  <!-- Script to dynamically show/hide spacer for Android only -->
-  <script>
-    const isAndroid = /Android/i.test(navigator.userAgent);
-    if (!isAndroid) {
-      const spacer = document.querySelector('.status-bar-spacer');
-      if (spacer) spacer.style.display = 'none';
-    }
-  </script>
 </body>
 </html>
