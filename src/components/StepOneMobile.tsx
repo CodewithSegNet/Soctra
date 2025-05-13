@@ -67,7 +67,7 @@ export default function MobileOnboardingSteps() {
         {/* Top Logo and Skip */}
         <div className="flex justify-end items-center w-full mb-6">
           <img src={logo} alt="Logo" className="w-[50px] hidden h-[50px]" />
-          <p onClick={handleSkip} className="text-white cursor-pointer mb-[1.7rem] mt-[.7rem] flex justify-end items-end font-normal">
+          <p onClick={handleSkip} className="text-white cursor-pointer mb-[1.7rem] mt-[1rem] flex justify-end items-end font-normal">
             Skip
           </p>
         </div>
