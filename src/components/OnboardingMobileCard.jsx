@@ -3,7 +3,7 @@ export default function Card({ imageSrc, altText, text, headeer }) {
         <>
 <div className="w-full">
 <div className="mx-auto">
-        <h2 className="text-left leading-6 text-white text-2xl mb-[15px] font-bold">{headeer}</h2>
+        <h2 className="text-left leading-6 text-white text-2xl mb-[11px] font-bold">{headeer}</h2>
         <div className=" w-[322px]">
         <p className="text-left leading-6 text-white text-xs mb-[.7rem]">{text}</p>
 
