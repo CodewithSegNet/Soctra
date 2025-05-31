@@ -297,7 +297,7 @@ const SignUp = ({ apiUrl }) => {
       <div className="flex flex-col h-full px-4 py-3">
         {/* Header section */}
         <div className="flex-shrink-0">
-          <div className="flex justify-between items-center w-full mb-3">
+          <div className="flex justify-between items-center w-full mb-[44px] mt-[24px]">
             {step > 1 ? (
               <button
                 onClick={handleGoBack}
@@ -310,26 +310,26 @@ const SignUp = ({ apiUrl }) => {
             )}
             <p
               onClick={handleSkip}
-              className="text-white cursor-pointer font-normal text-sm hover:opacity-80 transition-opacity"
+              className="text-white  cursor-pointer font-normal text-sm hover:opacity-80 transition-opacity"
             >
               Skip
             </p>
           </div>
 
           <div className={`transition-all duration-200 ${isTransitioning ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}>
-            <h3 className="text-lg font-bold mb-1">
-              {step === 1 ? "Get Started with Soctral" :
+            <h3 className="text-[33px] leading-[38px] font-bold mb-[16px]">
+              {step === 1 ? "Get Started with Soctral and Experience Secure Social Media Trading" :
                step === 2 ? "Verify Your Phone Number" :
-               step === 3 ? "Enter OTP" : 
+               step === 3 ?  `Enter The 6-Digit Code we Texted to +${getMaskedPhoneNumber()}` : 
                step === 4 ? "Set Your Password" : "Enter Your Display Name"}
             </h3>
-            <p className="text-xs text-gray-300 mb-4">
+            <p className="text-xs text-gray-400 mb-4">
               {step === 1
-                ? "Create an Account to Buy and Sell Social Media Accounts Securely."
+                ? "Create an Account to Buy and Sell Social Media Accounts Securely.."
                 : step === 2
                 ? "Enter your phone number to receive a verification code."
                 : step === 3
-                ? `Enter The 6-Digit Code we Texted to +${getMaskedPhoneNumber()}`
+                ? "This helps us keep your account secure by ensuring it’s really you."
                 : step === 4
                 ? "Create a strong password for your account."
                 : "Enter a Display Name to Represent You on Soctral."}
@@ -354,7 +354,7 @@ const SignUp = ({ apiUrl }) => {
                     value={formData.email}
                     onChange={handleInputChange}
                     placeholder="Email address"
-                    className="w-full py-3 rounded-full pl-4 border border-gray-400 bg-black text-white placeholder-gray-400 outline-none focus:border-white text-sm transition-colors"
+                    className="w-full py-4 rounded-full pl-4 border border-gray-400 bg-black text-white placeholder-gray-400 outline-none focus:border-white text-sm transition-colors"
                   />
                   {formData.email && !isValidEmail(formData.email) && (
                     <p className="text-red-400 text-xs mt-1">Please enter a valid email</p>
@@ -411,7 +411,7 @@ const SignUp = ({ apiUrl }) => {
                 <button
                   onClick={handleSubmitStep1}
                   disabled={loading || !isStep1Valid()}
-                  className={`w-full py-3 rounded-full text-white font-semibold transition-all text-sm flex items-center justify-center transform hover:scale-105 ${
+                  className={`w-full py-4 rounded-full text-white font-semibold transition-all text-sm flex items-center justify-center transform hover:scale-105 ${
                     loading || !isStep1Valid() ? "opacity-50 cursor-not-allowed" : ""
                   }`}
                   style={{ backgroundColor: 'rgba(96, 60, 208, 1)' }}
@@ -427,7 +427,7 @@ const SignUp = ({ apiUrl }) => {
                 </button>
                 <button
                   onClick={handleSignIn}
-                  className="w-full py-3 rounded-full bg-black text-white font-semibold text-sm transition-all transform hover:scale-105"
+                  className="w-full py-4 rounded-full bg-black text-white font-semibold text-sm transition-all transform hover:scale-105"
                   style={{ border: '1px solid rgba(96, 60, 208, 1)' }}
                 >
                   Sign In
@@ -461,7 +461,7 @@ const SignUp = ({ apiUrl }) => {
                       value={formData.phoneNumber}
                       onChange={handleInputChange}
                       placeholder="Phone number"
-                      className="bg-black text-white placeholder-gray-400 outline-none py-3 flex-1 text-sm"
+                      className="bg-black text-white placeholder-gray-400 outline-none py-4 flex-1 text-sm"
                     />
                   </div>
                   {formData.phoneNumber && !isValidPhoneNumber(formData.phoneNumber) && (
@@ -480,7 +480,7 @@ const SignUp = ({ apiUrl }) => {
                 <button
                   onClick={handleSubmitStep2}
                   disabled={loading || !isStep2Valid()}
-                  className={`w-full py-3 rounded-full text-white font-semibold transition-all text-sm flex items-center justify-center transform hover:scale-105 ${
+                  className={`w-full py-4 rounded-full text-white font-semibold transition-all text-sm flex items-center justify-center transform hover:scale-105 ${
                     loading || !isStep2Valid() ? "opacity-50 cursor-not-allowed" : ""
                   }`}
                   style={{ backgroundColor: 'rgba(96, 60, 208, 1)' }}
@@ -500,8 +500,8 @@ const SignUp = ({ apiUrl }) => {
             <>
               <div className="flex items-center justify-center">
                 <div className="w-full">
-                  <label className="block text-sm mb-3 font-medium text-center">
-                    Enter OTP
+                  <label className="block text-sm mb-3 font-medium text-left">
+                    Enter the Code
                   </label>
                   <div className="flex justify-center space-x-2 mb-4">
                     {[...Array(6)].map((_, index) => (
@@ -530,7 +530,7 @@ const SignUp = ({ apiUrl }) => {
                 <button
                   onClick={handleSubmitStep3}
                   disabled={loading || !isStep3Valid()}
-                  className={`w-full py-3 rounded-full text-white font-semibold transition-all text-sm flex items-center justify-center transform hover:scale-105 ${
+                  className={`w-full py-4 rounded-full text-white font-semibold transition-all text-sm flex items-center justify-center transform hover:scale-105 ${
                     loading || !isStep3Valid() ? "opacity-50 cursor-not-allowed" : ""
                   }`}
                   style={{ backgroundColor: 'rgba(96, 60, 208, 1)' }}
@@ -548,7 +548,7 @@ const SignUp = ({ apiUrl }) => {
                 <div className="text-center">
                   {!canResend ? (
                     <p className="text-gray-400 text-sm">
-                      Resend code in {countdown} seconds
+                      Resending code in {countdown} seconds
                     </p>
                   ) : (
                     <button 
@@ -584,7 +584,7 @@ const SignUp = ({ apiUrl }) => {
                       value={formData.password}
                       onChange={handleInputChange}
                       placeholder="Create a password"
-                      className="w-full py-3 rounded-full pl-4 pr-10 border border-gray-400 bg-black text-white placeholder-gray-400 outline-none focus:border-white text-sm transition-colors"
+                      className="w-full py-4 rounded-full pl-4 pr-10 border border-gray-400 bg-black text-white placeholder-gray-400 outline-none focus:border-white text-sm transition-colors"
                     />
                     <button
                       type="button"
@@ -611,7 +611,7 @@ const SignUp = ({ apiUrl }) => {
                       value={formData.confirmPassword}
                       onChange={handleInputChange}
                       placeholder="Confirm your password"
-                      className="w-full py-3 rounded-full pl-4 pr-10 border border-gray-400 bg-black text-white placeholder-gray-400 outline-none focus:border-white text-sm transition-colors"
+                      className="w-full py-4 rounded-full pl-4 pr-10 border border-gray-400 bg-black text-white placeholder-gray-400 outline-none focus:border-white text-sm transition-colors"
                     />
                     <button
                       type="button"
@@ -644,7 +644,7 @@ const SignUp = ({ apiUrl }) => {
                 <button
                   onClick={handleSubmitStep4}
                   disabled={loading || !isStep4Valid()}
-                  className={`w-full py-3 rounded-full text-white font-semibold transition-all text-sm flex items-center justify-center transform hover:scale-105 ${
+                  className={`w-full py-4 rounded-full text-white font-semibold transition-all text-sm flex items-center justify-center transform hover:scale-105 ${
                     loading || !isStep4Valid() ? "opacity-50 cursor-not-allowed" : ""
                   }`}
                   style={{ backgroundColor: 'rgba(96, 60, 208, 1)' }}
@@ -673,7 +673,7 @@ const SignUp = ({ apiUrl }) => {
                     value={formData.displayName}
                     onChange={handleInputChange}
                     placeholder="Enter your display name"
-                    className="w-full py-3 rounded-full pl-4 border border-gray-400 bg-black text-white placeholder-gray-400 outline-none focus:border-white text-sm transition-colors"
+                    className="w-full py-4 rounded-full pl-4 border border-gray-400 bg-black text-white placeholder-gray-400 outline-none focus:border-white text-sm transition-colors"
                   />
                   {formData.displayName && formData.displayName.trim().length < 2 && (
                     <p className="text-red-400 text-xs mt-1">Display name must be at least 2 characters</p>
@@ -691,7 +691,7 @@ const SignUp = ({ apiUrl }) => {
                 <button
                   onClick={handleSubmitStep5}
                   disabled={loading || !isStep5Valid()}
-                  className={`w-full py-3 rounded-full text-white font-semibold transition-all text-sm flex items-center justify-center transform hover:scale-105 ${
+                  className={`w-full py-4 rounded-full text-white font-semibold transition-all text-sm flex items-center justify-center transform hover:scale-105 ${
                     loading || !isStep5Valid() ? "opacity-50 cursor-not-allowed" : ""
                   }`}
                   style={{ backgroundColor: 'rgba(96, 60, 208, 1)' }}

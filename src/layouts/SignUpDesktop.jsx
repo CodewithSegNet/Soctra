@@ -291,9 +291,9 @@ const SignUp = ({ apiUrl }) => {
 
   const renderStepForm = () => {
     const stepVariants = {
-      initial: { opacity: 0, x: 20 },
-      animate: { opacity: 1, x: 0 },
-      exit: { opacity: 0, x: -20 }
+      initial: { opacity: 0, y: 20 },
+      animate: { opacity: 1, y: 0 },
+      exit: { opacity: 0, y: -20 }
     };
 
     switch (step) {
@@ -307,7 +307,7 @@ const SignUp = ({ apiUrl }) => {
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4 }}
           >
             <div>
               <label className="block text-sm mb-2 font-medium">Email</label>
@@ -404,7 +404,7 @@ const SignUp = ({ apiUrl }) => {
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4 }}
           >
             <div>
               <label className="block text-sm mb-2 font-medium">Phone Number</label>
@@ -472,7 +472,7 @@ const SignUp = ({ apiUrl }) => {
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4 }}
           >
             <div>
               <label className="block text-sm mb-3 font-medium text-center">Enter OTP</label>
@@ -555,7 +555,7 @@ const SignUp = ({ apiUrl }) => {
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4 }}
           >
             <div>
               <label className="block text-sm mb-2 font-medium">Password</label>
@@ -649,7 +649,7 @@ const SignUp = ({ apiUrl }) => {
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4 }}
           >
             <div>
               <label className="block text-sm mb-2 font-medium">Display Name</label>
@@ -698,8 +698,8 @@ const SignUp = ({ apiUrl }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/70 flex justify-center items-center px-4">
-      <div className="bg-[rgba(13,13,13,1)] w-[502px] text-white rounded-2xl shadow-2xl p-8 relative">
+    <div className="fixed inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/70 flex justify-center items-center px-4 z-50">
+      <div className="bg-[rgba(13,13,13,1)] w-[502px] text-white rounded-2xl shadow-2xl p-8 relative z-10">
         {/* Header */}
         <div className="flex justify-between items-center mb-4">
           {step > 1 ? (
@@ -727,9 +727,11 @@ const SignUp = ({ apiUrl }) => {
         </div>
 
         {/* Form Content with Animation */}
-        <AnimatePresence mode="wait">
-          {renderStepForm()}
-        </AnimatePresence>
+        <div className="min-h-[400px] relative">
+          <AnimatePresence mode="wait">
+            {renderStepForm()}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );
