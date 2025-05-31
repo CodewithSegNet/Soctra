@@ -1,14 +1,13 @@
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { Eye, EyeOff } from "lucide-react";
-import Warning from "../assets/warning.png"
-import { Link } from 'react-router-dom';
+// layouts/SignInMobile.jsx - Enhanced Version
+import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { MobileNavBar, MobileKeyboardSpacer, useHapticFeedback } from "../../../Soctra/src/hooks/useDevicestype"
 
-
-
-
-
-const SignIn = ({ apiUrl }) => {
+const SignInMobile = ({ apiUrl }) => {
+  const navigate = useNavigate();
+  const { triggerHaptic } = useHapticFeedback();
   const [method, setMethod] = useState("phone");
   const [formData, setFormData] = useState({
     phoneNumber: "",
@@ -23,24 +22,32 @@ const SignIn = ({ apiUrl }) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear error when user starts typing
+    if (error) setError(null);
+  };
+
+  const handleMethodChange = (newMethod) => {
+    triggerHaptic('light');
+    setMethod(newMethod);
+    setError(null);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    triggerHaptic('medium');
     setLoading(true);
     setError(null);
 
-    const payload =
-      method === "phone"
-        ? {
-            phone_number: formData.phoneNumber,
-            country_code: formData.countryCode,
-            password: formData.password,
-          }
-        : {
-            email: formData.email,
-            password: formData.password,
-          };
+    const payload = method === "phone"
+      ? {
+          phone_number: formData.phoneNumber,
+          country_code: formData.countryCode,
+          password: formData.password,
+        }
+      : {
+          email: formData.email,
+          password: formData.password,
+        };
 
     try {
       const res = await fetch(`${apiUrl}/sign-in`, {
@@ -50,157 +57,196 @@ const SignIn = ({ apiUrl }) => {
       });
 
       if (!res.ok) throw new Error("Failed to sign in");
-
       const result = await res.json();
+      triggerHaptic('success');
       console.log("Success:", result);
     } catch (err) {
+      triggerHaptic('error');
       setError(err.message);
     } finally {
       setLoading(false);
     }
   };
 
+  const PhoneField = () => (
+    <div className="space-y-3">
+      <label className="block font-medium text-white text-base">
+        Phone Number
+      </label>
+      <div className="flex items-center border border-gray-600 bg-gray-900/50 rounded-2xl overflow-hidden mobile-transition focus-within:border-white focus-within:bg-gray-900">
+        <select
+          name="countryCode"
+          value={formData.countryCode}
+          onChange={handleInputChange}
+          className="bg-transparent text-white outline-none pl-4 pr-2 py-5 mobile-button"
+        >
+          <option value="+234" className="bg-gray-900">🇳🇬 (+234)</option>
+          <option value="+1" className="bg-gray-900">🇺🇸 (+1)</option>
+          <option value="+44" className="bg-gray-900">🇬🇧 (+44)</option>
+          <option value="+91" className="bg-gray-900">🇮🇳 (+91)</option>
+          <option value="+27" className="bg-gray-900">🇿🇦 (+27)</option>
+        </select>
+        <div className="w-px bg-gray-600 mx-3 h-8" />
+        <input
+          type="tel"
+          name="phoneNumber"
+          value={formData.phoneNumber}
+          onChange={handleInputChange}
+          placeholder="Phone number"
+          className="flex-1 bg-transparent text-white placeholder-gray-400 outline-none py-5 pr-4 text-base"
+        />
+      </div>
+    </div>
+  );
+
+  const EmailField = () => (
+    <div className="space-y-3">
+      <label htmlFor="email" className="block font-medium text-white text-base">
+        Email Address
+      </label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        value={formData.email}
+        onChange={handleInputChange}
+        placeholder="Email address"
+        className="w-full border border-gray-600 bg-gray-900/50 text-white placeholder-gray-400 outline-none py-5 px-4 rounded-2xl text-base mobile-transition focus:border-white focus:bg-gray-900"
+      />
+    </div>
+  );
+
+  const PasswordField = () => (
+    <div className="space-y-3">
+      <label htmlFor="password" className="block font-medium text-white text-base">
+        Password
+      </label>
+      <div className="flex items-center border border-gray-600 bg-gray-900/50 rounded-2xl overflow-hidden mobile-transition focus-within:border-white focus-within:bg-gray-900">
+        <input
+          type={showPassword ? "text" : "password"}
+          name="password"
+          id="password"
+          value={formData.password}
+          onChange={handleInputChange}
+          placeholder="Password"
+          className="flex-1 bg-transparent text-white placeholder-gray-400 outline-none py-5 pl-4 text-base"
+        />
+        <button
+          type="button"
+          onClick={() => {
+            triggerHaptic('light');
+            setShowPassword((prev) => !prev);
+          }}
+          className="text-gray-400 hover:text-white p-4 mobile-button"
+        >
+          {showPassword ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
+        </button>
+      </div>
+    </div>
+  );
+
   return (
- <section className="bg-black text-white h-screen flex flex-col">
-      <div className="flex flex-col h-full overflow-auto px-4 py-4">
-        <div className="pt-[3rem] mb-10">
-          <h3 className="text-2xl font-bold mb-[16px]">Sign In to Soctral</h3>
-          <p className="text-sm text-gray-300">
-            Sign in with your phone number or email.
+    <div className="bg-black text-white min-h-screen flex flex-col">
+      <MobileNavBar 
+        title="" 
+        onBack={() => navigate(-1)}
+      />
+      
+      <div className="flex-1 px-6 py-8 flex flex-col">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-3 text-white">
+            Welcome back
+          </h1>
+          <p className="text-gray-400 text-base leading-relaxed">
+            Sign in to continue to your account
           </p>
         </div>
 
-        {/* Toggle Method */}
-        <div className="flex justify-center space-x-8 mb-8">
+        {/* Method Toggle */}
+        <div className="flex bg-gray-900/30 rounded-2xl p-1 mb-8">
           {["phone", "email"].map((type) => (
             <button
               key={type}
-              onClick={() => setMethod(type)}
-              className={`relative pb-1 text-base ${
-                method === type ? "font-semibold" : "text-gray-400"
+              onClick={() => handleMethodChange(type)}
+              className={`flex-1 py-3 px-4 rounded-xl text-base font-medium mobile-transition mobile-button ${
+                method === type 
+                  ? "bg-white text-black shadow-lg" 
+                  : "text-gray-400 hover:text-white"
               }`}
             >
-              {type === "phone" ? "Phone Number" : "Email Address"}
-              {method === type && (
-                <span className="absolute left-1/2 -translate-x-1/2 bottom-0 w-12 h-[2px] bg-white rounded-full" />
-              )}
+              {type === "phone" ? "Phone" : "Email"}
             </button>
           ))}
         </div>
 
         {/* Form */}
-        <AnimatePresence mode="wait">
-          <motion.form
-            key={method}
-            className="space-y-5"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.3 }}
-            onSubmit={handleSubmit}
-          >
-            {/* Phone or Email Field */}
-            {method === "phone" ? (
-              <div className="space-y-2">
-                <label className="block text-base mb-[16px] font-medium">Phone Number</label>
-                <div className="flex items-center border border-gray-400 rounded-[90px] bg-black overflow-hidden">
-                  <select
-                    name="countryCode"
-                    value={formData.countryCode}
-                    onChange={handleInputChange}
-                    className="bg-black text-white pl-4 pr-2 py-5 outline-none appearance-none"
-                  >
-                    <option value="+234">🇳🇬 (+234)</option>
-                    <option value="+1">🇺🇸 (+1)</option>
-                    <option value="+44">🇬🇧 (+44)</option>
-                    <option value="+91">🇮🇳 (+91)</option>
-                    <option value="+27">🇿🇦 (+27)</option>
-                  </select>
-                  <div className="h-8 w-px bg-white/30 mx-3" />
-                  <input
-                    type="tel"
-                    name="phoneNumber"
-                    value={formData.phoneNumber}
-                    onChange={handleInputChange}
-                    placeholder="Phone number"
-                    className="flex-1 bg-black text-white placeholder-gray-400  outline-none"
-                  />
-                </div>
-              </div>
-            ) : (
-              <div className="space-y-2">
-                <label htmlFor="email" className="block text-base mb-[16px] font-medium">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="Email address"
-                  className="w-full py-5 rounded-[90px] pl-5 border border-gray-400 bg-black text-white placeholder-gray-400 outline-none focus:border-white"
-                />
-              </div>
-            )}
+        <div className="flex-1">
+          <AnimatePresence mode="wait">
+            <motion.form
+              key={method}
+              className="space-y-6"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              onSubmit={handleSubmit}
+            >
+              {method === "phone" ? <PhoneField /> : <EmailField />}
+              <PasswordField />
 
-            {/* Password Field with Eye Icon */}
-            <div className="space-y-2 relative">
-              <label htmlFor="password" className="block text-base mb-[16px]  font-medium">
-                Password
-              </label>
-              <div className="flex items-center border border-gray-400 rounded-[90px] bg-black overflow-hidden">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  id="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  placeholder="Password"
-                  className="flex-1 p-5 bg-black text-white placeholder-gray-400 outline-none"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  className="p-5 text-gray-300 hover:text-white"
+              {error && (
+                <motion.div 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-red-500/10 border border-red-500/20 rounded-xl p-4"
                 >
-                  {showPassword ? (
-                    <Eye className="w-5 h-5" />
+                  <p className="text-red-400 text-sm">{error}</p>
+                </motion.div>
+              )}
+
+              <div className="pt-4">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className={`w-full py-4 rounded-2xl bg-white text-black font-semibold text-base mobile-transition mobile-button ${
+                    loading ? "opacity-50 cursor-not-allowed" : "active:bg-gray-100"
+                  }`}
+                >
+                  {loading ? (
+                    <div className="flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-5 w-5 border-2 border-black border-t-transparent mr-2"></div>
+                      Signing In...
+                    </div>
                   ) : (
-                    <EyeOff className="w-5 h-5" />
+                    "Continue"
                   )}
                 </button>
               </div>
-            </div>
+            </motion.form>
+          </AnimatePresence>
+        </div>
 
-            {/* Error */}
-      {error && (
-  <div className="flex items-center space-x-3">
-    <img src={Warning} alt="Warning" className="w-6 h-6" />
-    <p className="text-red-500 text-xl my-[2px] text-left">{error}</p>
-  </div>
-)}
-
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className={`w-full p-5 rounded-[90px] bg-primary text-white font-semibold transition-opacity ${
-                loading ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+        {/* Footer */}
+        <div className="mt-8 text-center">
+          <p className="text-gray-400 text-base">
+            Don't have an account?{" "}
+            <button 
+              onClick={() => {
+                triggerHaptic('light');
+                navigate('/sign-up');
+              }}
+              className="text-white font-medium hover:underline mobile-button"
             >
-              {loading ? "Signing In..." : "Continue"}
+              Sign Up
             </button>
-                      <p className="text-[rgba(255,255,255,0.5)] text-center mx-auto mt-[24px]">Don’t have an account? <span className="text-white font-normal text-base hover:underline"><Link
-                      to="/sign-up"
-                      > Sign Up</Link></span></p>
-
-          </motion.form>
-        </AnimatePresence>
+          </p>
+        </div>
       </div>
-    </section>
+      
+      <MobileKeyboardSpacer />
+    </div>
   );
 };
 
-export default SignIn;
+export default SignInMobile;
