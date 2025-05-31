@@ -2,40 +2,27 @@ import React from 'react';
 import { useScreenSize } from '../hooks/useScreenSize';
 
 const ResponsiveWrapper = ({ 
-  mobileComponent: MobileComponent, 
-  desktopComponent: DesktopComponent,
-  tabletComponent: TabletComponent = null,
-  ...props 
+  mobile: MobileComponent, 
+  desktop: DesktopComponent, 
+  tablet: TabletComponent,
+  ...sharedProps 
 }) => {
   const { isMobile, isTablet, isDesktop } = useScreenSize();
 
-  // Full screen mobile styles (covers status bar)
-  const mobileStyles = {
-    minHeight: '100vh',
-    minHeight: '100dvh', // Dynamic viewport height for mobile
-    width: '100vw',
-    position: 'relative',
-    overflow: 'hidden',
-  };
-
-  if (isMobile) {
-    return (
-      <div style={mobileStyles} className="mobile-container">
-        <MobileComponent {...props} />
-      </div>
-    );
+  if (isMobile && MobileComponent) {
+    return <MobileComponent {...sharedProps} />;
   }
-
+  
   if (isTablet && TabletComponent) {
-    return <TabletComponent {...props} />;
+    return <TabletComponent {...sharedProps} />;
+  }
+  
+  if (isDesktop && DesktopComponent) {
+    return <DesktopComponent {...sharedProps} />;
   }
 
-  if (isDesktop) {
-    return <DesktopComponent {...props} />;
-  }
-
-  // Fallback to desktop component
-  return <DesktopComponent {...props} />;
+  // Fallback to desktop if no mobile component provided
+  return <DesktopComponent {...sharedProps} />;
 };
 
 export default ResponsiveWrapper;
