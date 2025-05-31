@@ -5,12 +5,51 @@ export default function Onboarding({ onDone }) {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
+    // Set status bar color for mobile onboarding
+    const setStatusBarColor = (color, style = 'default') => {
+      // For iOS Safari
+      let metaThemeColor = document.querySelector('meta[name="theme-color"]');
+      if (!metaThemeColor) {
+        metaThemeColor = document.createElement('meta');
+        metaThemeColor.name = 'theme-color';
+        document.head.appendChild(metaThemeColor);
+      }
+      metaThemeColor.content = color;
+
+      // For iOS Safari status bar style
+      let metaStatusBar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+      if (!metaStatusBar) {
+        metaStatusBar = document.createElement('meta');
+        metaStatusBar.name = 'apple-mobile-web-app-status-bar-style';
+        document.head.appendChild(metaStatusBar);
+      }
+      metaStatusBar.content = style;
+
+      // For Android Chrome
+      let metaAndroid = document.querySelector('meta[name="msapplication-navbutton-color"]');
+      if (!metaAndroid) {
+        metaAndroid = document.createElement('meta');
+        metaAndroid.name = 'msapplication-navbutton-color';
+        document.head.appendChild(metaAndroid);
+      }
+      metaAndroid.content = color;
+    };
+
+    // Set purple status bar when onboarding starts
+    setStatusBarColor('rgba(96, 60, 208, 1)', 'default');
+
     const timer = setTimeout(() => {
       setShow(false);
+      // Reset status bar color when onboarding ends
+      setStatusBarColor('#ffffff', 'default'); // or whatever your default color is
       onDone();
     }, 3000);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      // Cleanup: reset status bar color if component unmounts
+      setStatusBarColor('#ffffff', 'default');
+    };
   }, [onDone]);
 
   if (!show) return null;
