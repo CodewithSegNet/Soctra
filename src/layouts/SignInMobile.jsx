@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { MobileNavBar, MobileKeyboardSpacer, useHapticFeedback } from "../Soctra/src/hooks/useDevicestype"
+import { MobileNavBar, MobileKeyboardSpacer, useHapticFeedback } from "../../../Soctra/src/hooks/useDevicestype"
 
 const SignInMobile = ({ apiUrl }) => {
   const navigate = useNavigate();
