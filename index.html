@@ -9,11 +9,10 @@
 
   <!-- iOS specific meta tags -->
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-status-bar-style" content="light-content">
 
-  <!-- Android theme color -->
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <!-- Android theme color - default to black -->
+  <meta name="theme-color" content="#000000">
   <meta name="mobile-web-app-capable" content="yes">
 
   <title>Soctral</title>
@@ -64,10 +63,11 @@
     .status-bar-spacer {
       height: 24px;
       width: 100%;
-      background-color: #ffffff;
+      background-color: #000000; /* Default to black */
       position: sticky;
       top: 0;
       z-index: 1000;
+      transition: background-color 0.3s ease;
     }
   </style>
 </head>
