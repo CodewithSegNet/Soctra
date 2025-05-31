@@ -1,5 +1,5 @@
 import React from 'react';
-import { useScreenSize } from '../hooks/useDevicestype';
+import { useScreenSize } from '../hooks/useScreenSize';
 
 const PageLayout = ({ children, mobileLayout = true, desktopLayout = true }) => {
   const { isMobile } = useScreenSize();
