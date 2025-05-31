@@ -36,7 +36,44 @@ const ResponsiveComponent = ({ MobileComponent, DesktopComponent, ...props }) =>
 
 function App() {
   const [hasOnboarded, setHasOnboarded] = useState(false);
-const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3001";
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3001";
+
+  // Ensure status bar is black for all screens after onboarding
+  useEffect(() => {
+    if (hasOnboarded) {
+      const setStatusBarColor = (color, style = 'default') => {
+        // For iOS Safari
+        let metaThemeColor = document.querySelector('meta[name="theme-color"]');
+        if (!metaThemeColor) {
+          metaThemeColor = document.createElement('meta');
+          metaThemeColor.name = 'theme-color';
+          document.head.appendChild(metaThemeColor);
+        }
+        metaThemeColor.content = color;
+
+        // For iOS Safari status bar style
+        let metaStatusBar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+        if (!metaStatusBar) {
+          metaStatusBar = document.createElement('meta');
+          metaStatusBar.name = 'apple-mobile-web-app-status-bar-style';
+          document.head.appendChild(metaStatusBar);
+        }
+        metaStatusBar.content = style;
+
+        // For Android Chrome
+        let metaAndroid = document.querySelector('meta[name="msapplication-navbutton-color"]');
+        if (!metaAndroid) {
+          metaAndroid = document.createElement('meta');
+          metaAndroid.name = 'msapplication-navbutton-color';
+          document.head.appendChild(metaAndroid);
+        }
+        metaAndroid.content = color;
+      };
+
+      // Set black status bar for all screens after onboarding
+      setStatusBarColor('#000000', 'default');
+    }
+  }, [hasOnboarded]);
 
   if (!hasOnboarded) {
     return <Onboarding onDone={() => setHasOnboarded(true)} />;

@@ -1,3 +1,4 @@
+// Onboarding.jsx
 import { useEffect, useState } from "react";
 import logo from "../assets/soctraLogo.png";
 
@@ -5,6 +6,9 @@ export default function Onboarding({ onDone }) {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
+    // Check if it's mobile device
+    const isMobile = window.innerWidth < 1024;
+    
     // Set status bar color for mobile onboarding
     const setStatusBarColor = (color, style = 'default') => {
       // For iOS Safari
@@ -35,20 +39,22 @@ export default function Onboarding({ onDone }) {
       metaAndroid.content = color;
     };
 
-    // Set purple status bar when onboarding starts
-    setStatusBarColor('rgba(96, 60, 208, 1)', 'default');
+    // Only set purple status bar for mobile devices
+    if (isMobile) {
+      setStatusBarColor('rgba(96, 60, 208, 1)', 'default');
+    }
 
     const timer = setTimeout(() => {
       setShow(false);
-      // Reset status bar color when onboarding ends
-      setStatusBarColor('#ffffff', 'default'); // or whatever your default color is
+      // Reset status bar color to black when onboarding ends
+      setStatusBarColor('#000000', 'default');
       onDone();
     }, 3000);
 
     return () => {
       clearTimeout(timer);
-      // Cleanup: reset status bar color if component unmounts
-      setStatusBarColor('#ffffff', 'default');
+      // Cleanup: reset status bar color to black if component unmounts
+      setStatusBarColor('#000000', 'default');
     };
   }, [onDone]);
 
