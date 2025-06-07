@@ -11,7 +11,7 @@ const SignUp = ({ apiUrl }) => {
   const navigate = (path) => {
     console.log(`Navigate to: ${path}`);
     // For demo purposes, show success message
-    if (path === "/homepage") {
+    if (path === "/") {
       alert("Sign up completed successfully! Redirecting to homepage...");
     }
   };
@@ -551,6 +551,8 @@ const SignUp = ({ apiUrl }) => {
                         <input
                           key={index}
                           type="text"
+                          inputMode="numeric"
+                          pattern="[0-9]*"
                           maxLength="1"
                           data-index={index}
                           value={formData.otp[index] || ''}
