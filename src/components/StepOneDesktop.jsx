@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "../assets/soctraLogo.png";
+import logo from "../assets/SoctralbgLogo.png";
 import Card from "../components/OnboardingDesktopCard";
 import one from "../assets/1.svg";
 import two from "../assets/2.svg";

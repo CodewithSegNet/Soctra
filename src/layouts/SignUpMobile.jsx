@@ -4,6 +4,8 @@ import Warning from "../assets/warning.png";
 import GoogleIcon from "../assets/google.png";
 import AppleIcon from "../assets/apple.png";
 
+
+
 const SignUp = ({ apiUrl }) => {
   // Mock navigation - in real app, use react-router's useNavigate
   const navigate = (path) => {
@@ -290,90 +292,128 @@ const SignUp = ({ apiUrl }) => {
   };
 
   return (
-    <section className="bg-black text-white h-screen flex flex-col overflow-hidden">
-      {/* Black status bar */}
-      <div className="w-full h-1 bg-black"></div>
+    <>
+      <style jsx>{`
+        /* Prevent zoom on input focus for mobile devices */
+        input[type="email"],
+        input[type="tel"],
+        input[type="text"],
+        input[type="password"],
+        select {
+          font-size: 16px !important;
+          background-color: black !important;
+          -webkit-background-clip: text !important;
+          -webkit-text-fill-color: white !important;
+        }
+        
+        /* Override autofill styles */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+          -webkit-box-shadow: 0 0 0 30px black inset !important;
+          -webkit-text-fill-color: white !important;
+          background-color: black !important;
+        }
+
+        /* Override paste background */
+        input::selection {
+          background-color: rgba(96, 60, 208, 0.3) !important;
+        }
+        
+        input::-moz-selection {
+          background-color: rgba(96, 60, 208, 0.3) !important;
+        }
+      `}</style>
       
-      <div className="flex flex-col h-full px-4 py-3">
-        {/* Header section */}
-        <div className="flex-shrink-0">
-          <div className="flex justify-between items-center w-full mb-[44px] mt-[24px]">
-            {step > 1 ? (
-              <button
-                onClick={handleGoBack}
-                className="text-white cursor-pointer font-normal text-sm flex items-center hover:opacity-80 transition-opacity"
-              >
-                <ArrowLeft className="w-4 h-4" />
-              </button>
-            ) : (
-              <div className="w-4 h-4"></div>
-            )}
-            <p
-              onClick={handleSkip}
-              className="text-white  cursor-pointer font-normal text-sm hover:opacity-80 transition-opacity"
-            >
-              Skip
-            </p>
+      <section className="bg-black text-white h-screen flex flex-col overflow-hidden">
+        {/* Black status bar */}
+        <div className="w-full h-1 bg-black"></div>
+        
+        <div className="flex flex-col h-full px-4 py-3">
+          {/* Header section */}
+          <div className="flex-shrink-0">
+            <div className="flex justify-between items-center w-full mb-[44px] mt-[24px]">
+              {step > 1 ? (
+                <button
+                  onClick={handleGoBack}
+                  className="text-white cursor-pointer font-normal text-sm flex items-center hover:opacity-80 transition-opacity"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                </button>
+              ) : (
+                <div className="w-4 h-4"></div>
+              )}
+              {step === 1 && (
+                <p
+                  onClick={handleSkip}
+                  className="text-white cursor-pointer font-normal text-sm hover:opacity-80 transition-opacity"
+                >
+                  Skip
+                </p>
+              )}
+              {step > 1 && <div className="w-4 h-4"></div>}
+            </div>
+
+            <div className={`transition-all duration-200 ${isTransitioning ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}>
+              <h3 className="text-[33px] leading-[38px] font-bold mb-[16px]">
+                {step === 1 ? "Get Started with Soctral and Experience Secure Social Media Trading" :
+                 step === 2 ? "Verify Your Phone Number" :
+                 step === 3 ?  `Enter The 6-Digit Code we Texted to +${getMaskedPhoneNumber()}` : 
+                 step === 4 ? "Set Your Password" : "Enter Your Display Name"}
+              </h3>
+              <p className="text-xs text-gray-400 mb-4">
+                {step === 1
+                  ? "Create an Account to Buy and Sell Social Media Accounts Securely.."
+                  : step === 2
+                  ? "Enter your phone number to receive a verification code."
+                  : step === 3
+                  ? "This helps us keep your account secure by ensuring it's really you."
+                  : step === 4
+                  ? "Create a strong password for your account."
+                  : "Enter a Display Name to Represent You on Soctral."}
+              </p>
+            </div>
           </div>
 
-          <div className={`transition-all duration-200 ${isTransitioning ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}>
-            <h3 className="text-[33px] leading-[38px] font-bold mb-[16px]">
-              {step === 1 ? "Get Started with Soctral and Experience Secure Social Media Trading" :
-               step === 2 ? "Verify Your Phone Number" :
-               step === 3 ?  `Enter The 6-Digit Code we Texted to +${getMaskedPhoneNumber()}` : 
-               step === 4 ? "Set Your Password" : "Enter Your Display Name"}
-            </h3>
-            <p className="text-xs text-gray-400 mb-4">
-              {step === 1
-                ? "Create an Account to Buy and Sell Social Media Accounts Securely.."
-                : step === 2
-                ? "Enter your phone number to receive a verification code."
-                : step === 3
-                ? "This helps us keep your account secure by ensuring it’s really you."
-                : step === 4
-                ? "Create a strong password for your account."
-                : "Enter a Display Name to Represent You on Soctral."}
-            </p>
-          </div>
-        </div>
-
-        {/* Dynamic form content with animation */}
-        <div className={`flex flex-col h-full transition-all duration-300 ${
-          isTransitioning ? 'opacity-0 translate-x-4' : 'opacity-100 translate-x-0'
-        }`}>
-          {step === 1 ? (
-            <>
-              <div className="space-y-3">
-                <div>
-                  <label className="block text-sm mb-1 font-medium">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="Email address"
-                    className="w-full py-4 rounded-full pl-4 border border-gray-400 bg-black text-white placeholder-gray-400 outline-none focus:border-white text-sm transition-colors"
-                  />
-                  {formData.email && !isValidEmail(formData.email) && (
-                    <p className="text-red-400 text-xs mt-1">Please enter a valid email</p>
-                  )}
-                </div>
-
-                   {error && (
-                  <div className="flex items-center mb-4">
-                    <img src={Warning} alt="Warning" className="w-5 h-5" />
-                    <p className="text-red-500 text-sm ml-2">{error}</p>
+          {/* Dynamic form content with animation */}
+          <div className={`flex flex-col h-full transition-all duration-300 ${
+            isTransitioning ? 'opacity-0 translate-x-4' : 'opacity-100 translate-x-0'
+          }`}>
+            {step === 1 ? (
+              <>
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-sm mb-1 font-medium">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="Email address"
+                      className="w-full py-4 rounded-full pl-4 border border-gray-400 bg-black text-white placeholder-gray-400 outline-none focus:border-white text-sm transition-colors"
+                      style={{ fontSize: '16px' }}
+                    />
+                    {formData.email && !isValidEmail(formData.email) && (
+                      <p className="text-red-400 text-xs mt-1">Please enter a valid email</p>
+                    )}
                   </div>
-                )}
+
+                     {error && (
+                    <div className="flex items-center mb-4">
+                      <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-xs">!</div>
+                      <p className="text-red-500 text-sm ml-2">{error}</p>
+                    </div>
+                  )}
 
 
-                <div className="text-center my-3">
-                  <p className="text-xs">Or With</p>
-                </div>
+                  <div className="text-center my-3">
+                    <p className="text-xs">Or With</p>
+                  </div>
 
-                       <div className="flex justify-center space-x-8 mb-6">
+                     <div className="flex justify-center space-x-8 mb-6">
                   <button type="button" onClick={() => {}}>
                     <img src={GoogleIcon} alt="Google" className="w-8 h-8" />
                   </button>
@@ -383,298 +423,305 @@ const SignUp = ({ apiUrl }) => {
                 </div>
 
 
-                <div className="flex items-start space-x-2">
-                  <input
-                    type="checkbox"
-                    name="termsAccepted"
-                    checked={formData.termsAccepted}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        termsAccepted: e.target.checked,
-                      }))
-                    }
-                    className="mt-1 w-4 h-4 appearance-none border border-gray-400 rounded bg-black checked:border-purple-700 relative after:content-['✓'] after:text-white after:text-xs after:absolute after:top-0 after:left-0.5 after:opacity-0 checked:after:opacity-100 transition-all"
-                    style={{ 
-                      accentColor: 'rgba(96, 60, 208, 1)',
-                      backgroundColor: formData.termsAccepted ? 'rgba(96, 60, 208, 1)' : 'black'
-                    }}
-                  />
-                  <label className="text-xs text-gray-400">
-                    I have read and agree to Soctral's{" "}
-                    <span className="text-white underline">Terms of Service & Privacy Policy</span>
-                  </label>
-                </div>
-              </div>
 
-              <div className="space-y-2 mt-4">
-                <button
-                  onClick={handleSubmitStep1}
-                  disabled={loading || !isStep1Valid()}
-                  className={`w-full py-4 rounded-full text-white font-semibold transition-all text-sm flex items-center justify-center transform hover:scale-105 ${
-                    loading || !isStep1Valid() ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                  style={{ backgroundColor: 'rgba(96, 60, 208, 1)' }}
-                >
-                  {loading ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                      Signing Up...
-                    </>
-                  ) : (
-                    "Sign Up"
-                  )}
-                </button>
-                <button
-                  onClick={handleSignIn}
-                  className="w-full py-4 rounded-full bg-black text-white font-semibold text-sm transition-all transform hover:scale-105"
-                  style={{ border: '1px solid rgba(96, 60, 208, 1)' }}
-                >
-                  Sign In
-                </button>
-              </div>
-            </>
-          ) : step === 2 ? (
-            <>
-              <div className="flex items-center justify-center">
-                <div className="w-full">
-                  <label className="block text-sm mb-2 font-medium">
-                    Phone Number
-                  </label>
-                  <div className="flex items-center border border-gray-400 rounded-full bg-black overflow-hidden focus-within:border-white transition-colors">
-                    <select
-                      name="countryCode"
-                      value={formData.countryCode}
-                      onChange={handleInputChange}
-                      className="bg-black text-white pl-3 pr-2 py-2 outline-none appearance-none text-sm"
-                    >
-                      <option value="+234">🇳🇬 (+234)</option>
-                      <option value="+1">🇺🇸 (+1)</option>
-                      <option value="+44">🇬🇧 (+44)</option>
-                      <option value="+91">🇮🇳 (+91)</option>
-                      <option value="+27">🇿🇦 (+27)</option>
-                    </select>
-                    <div className="h-4 w-px bg-white/30 mx-2" />
+                  <div className="flex items-start space-x-2">
                     <input
-                      type="tel"
-                      name="phoneNumber"
-                      value={formData.phoneNumber}
-                      onChange={handleInputChange}
-                      placeholder="Phone number"
-                      className="bg-black text-white placeholder-gray-400 outline-none py-4 flex-1 text-sm"
+                      type="checkbox"
+                      name="termsAccepted"
+                      checked={formData.termsAccepted}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          termsAccepted: e.target.checked,
+                        }))
+                      }
+                      className="mt-1 w-4 h-4 appearance-none border border-gray-400 rounded bg-black checked:border-purple-700 relative after:content-['✓'] after:text-white after:text-xs after:absolute after:top-0 after:left-0.5 after:opacity-0 checked:after:opacity-100 transition-all"
+                      style={{ 
+                        accentColor: 'rgba(96, 60, 208, 1)',
+                        backgroundColor: formData.termsAccepted ? 'rgba(96, 60, 208, 1)' : 'black'
+                      }}
                     />
+                    <label className="text-xs text-gray-400">
+                      I have read and agree to Soctral's{" "}
+                      <span className="text-white underline">Terms of Service & Privacy Policy</span>
+                    </label>
                   </div>
-                  {formData.phoneNumber && !isValidPhoneNumber(formData.phoneNumber) && (
-                    <p className="text-red-400 text-xs mt-1">Please enter a valid phone number</p>
-                  )}
-                  {error && (
-                    <div className="flex items-center p-2 bg-red-900/30 border border-red-500/50 rounded mt-2 animate-pulse">
-                      <div className="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-white text-xs">!</div>
-                      <p className="text-red-400 text-xs ml-2">{error}</p>
-                    </div>
-                  )}
                 </div>
-              </div>
 
-              <div className="mt-4">
-                <button
-                  onClick={handleSubmitStep2}
-                  disabled={loading || !isStep2Valid()}
-                  className={`w-full py-4 rounded-full text-white font-semibold transition-all text-sm flex items-center justify-center transform hover:scale-105 ${
-                    loading || !isStep2Valid() ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                  style={{ backgroundColor: 'rgba(96, 60, 208, 1)' }}
-                >
-                  {loading ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                      Verifying...
-                    </>
-                  ) : (
-                    "Continue"
-                  )}
-                </button>
-              </div>
-            </>
-          ) : step === 3 ? (
-            <>
-              <div className="flex items-center justify-center">
-                <div className="w-full">
-                  <label className="block text-sm mb-3 font-medium text-left">
-                    Enter the Code
-                  </label>
-                  <div className="flex justify-center space-x-2 mb-4">
-                    {[...Array(6)].map((_, index) => (
+                <div className="space-y-2 mt-4">
+                  <button
+                    onClick={handleSubmitStep1}
+                    disabled={loading || !isStep1Valid()}
+                    className={`w-full py-4 rounded-full text-white font-semibold transition-all text-sm flex items-center justify-center transform hover:scale-105 ${
+                      loading || !isStep1Valid() ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    style={{ backgroundColor: 'rgba(96, 60, 208, 1)' }}
+                  >
+                    {loading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                        Signing Up...
+                      </>
+                    ) : (
+                      "Sign Up"
+                    )}
+                  </button>
+                  <button
+                    onClick={handleSignIn}
+                    className="w-full py-4 rounded-full bg-black text-white font-semibold text-sm transition-all transform hover:scale-105"
+                    style={{ border: '1px solid rgba(96, 60, 208, 1)' }}
+                  >
+                    Sign In
+                  </button>
+                </div>
+              </>
+            ) : step === 2 ? (
+              <>
+                <div className="flex items-center justify-center">
+                  <div className="w-full">
+                    <label className="block text-sm mb-2 font-medium">
+                      Phone Number
+                    </label>
+                    <div className="flex items-center border border-gray-400 rounded-full bg-black overflow-hidden focus-within:border-white transition-colors">
+                      <select
+                        name="countryCode"
+                        value={formData.countryCode}
+                        onChange={handleInputChange}
+                        className="bg-black text-white pl-3 pr-2 py-2 outline-none appearance-none text-sm"
+                        style={{ fontSize: '16px' }}
+                      >
+                        <option value="+234">🇳🇬 (+234)</option>
+                        <option value="+1">🇺🇸 (+1)</option>
+                        <option value="+44">🇬🇧 (+44)</option>
+                        <option value="+91">🇮🇳 (+91)</option>
+                        <option value="+27">🇿🇦 (+27)</option>
+                      </select>
+                      <div className="h-4 w-px bg-white/30 mx-2" />
                       <input
-                        key={index}
-                        type="text"
-                        maxLength="1"
-                        data-index={index}
-                        value={formData.otp[index] || ''}
-                        className="w-10 h-12 text-center bg-black text-white text-lg outline-none border-b-2 border-gray-400 focus:border-white transition-colors"
-                        onChange={(e) => handleOtpChange(index, e.target.value)}
-                        onKeyDown={(e) => handleOtpKeyDown(e, index)}
+                        type="tel"
+                        name="phoneNumber"
+                        value={formData.phoneNumber}
+                        onChange={handleInputChange}
+                        placeholder="Phone number"
+                        className="bg-black text-white placeholder-gray-400 outline-none py-4 flex-1 text-sm"
+                        style={{ fontSize: '16px' }}
                       />
-                    ))}
+                    </div>
+                    {formData.phoneNumber && !isValidPhoneNumber(formData.phoneNumber) && (
+                      <p className="text-red-400 text-xs mt-1">Please enter a valid phone number</p>
+                    )}
+                    {error && (
+                      <div className="flex items-center p-2 bg-red-900/30 border border-red-500/50 rounded mt-2 animate-pulse">
+                        <div className="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-white text-xs">!</div>
+                        <p className="text-red-400 text-xs ml-2">{error}</p>
+                      </div>
+                    )}
                   </div>
+                </div>
+
+                <div className="mt-4">
+                  <button
+                    onClick={handleSubmitStep2}
+                    disabled={loading || !isStep2Valid()}
+                    className={`w-full py-4 rounded-full text-white font-semibold transition-all text-sm flex items-center justify-center transform hover:scale-105 ${
+                      loading || !isStep2Valid() ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    style={{ backgroundColor: 'rgba(96, 60, 208, 1)' }}
+                  >
+                    {loading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                        Verifying...
+                      </>
+                    ) : (
+                      "Continue"
+                    )}
+                  </button>
+                </div>
+              </>
+            ) : step === 3 ? (
+              <>
+                <div className="flex items-center justify-center">
+                  <div className="w-full">
+                    <label className="block text-sm mb-3 font-medium text-left">
+                      Enter the Code
+                    </label>
+                    <div className="flex justify-center space-x-2 mb-4">
+                      {[...Array(6)].map((_, index) => (
+                        <input
+                          key={index}
+                          type="text"
+                          maxLength="1"
+                          data-index={index}
+                          value={formData.otp[index] || ''}
+                          className="w-10 h-12 text-center bg-black text-white text-lg outline-none border-b-2 border-gray-400 focus:border-white transition-colors"
+                          style={{ fontSize: '16px' }}
+                          onChange={(e) => handleOtpChange(index, e.target.value)}
+                          onKeyDown={(e) => handleOtpKeyDown(e, index)}
+                        />
+                      ))}
+                    </div>
+                    {error && (
+                      <div className="flex items-center p-2 bg-red-900/30 border border-red-500/50 rounded mb-4 animate-pulse">
+                        <div className="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-white text-xs">!</div>
+                        <p className="text-red-400 text-xs ml-2">{error}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="space-y-2 mt-4">
+                  <button
+                    onClick={handleSubmitStep3}
+                    disabled={loading || !isStep3Valid()}
+                    className={`w-full py-4 rounded-full text-white font-semibold transition-all text-sm flex items-center justify-center transform hover:scale-105 ${
+                      loading || !isStep3Valid() ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    style={{ backgroundColor: 'rgba(96, 60, 208, 1)' }}
+                  >
+                    {loading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                        Verifying...
+                      </>
+                    ) : (
+                      "Continue"
+                    )}
+                  </button>
+                  
+                  <div className="text-center">
+                    {!canResend ? (
+                      <p className="text-gray-400 text-sm">
+                        Resending code in {countdown} seconds
+                      </p>
+                    ) : (
+                      <button 
+                        onClick={handleResendOtp}
+                        disabled={loading}
+                        className="underline hover:opacity-80 flex items-center justify-center mx-auto transition-opacity"
+                        style={{ color: 'rgba(96, 60, 208, 1)' }}
+                      >
+                        {loading ? (
+                          <>
+                            <Loader2 className="w-3 h-3 animate-spin mr-1" />
+                            Sending...
+                          </>
+                        ) : (
+                          "Resend Code"
+                        )}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </>
+            ) : step === 4 ? (
+              <>
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-sm mb-2 font-medium">
+                      Password
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        placeholder="Create a password"
+                        className="w-full py-4 rounded-full pl-4 pr-10 border border-gray-400 bg-black text-white placeholder-gray-400 outline-none focus:border-white text-sm transition-colors"
+                        style={{ fontSize: '16px' }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 hover:scale-110 transition-transform"
+                      >
+                        {showPassword ? 
+                          <EyeOff className="w-4 h-4 text-gray-400 hover:text-white transition-colors" /> : 
+                          <Eye className="w-4 h-4 text-gray-400 hover:text-white transition-colors" />
+                        }
+                      </button>
+                    </div>
+                    <PasswordStrengthIndicator />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm mb-2 font-medium">
+                      Confirm Password
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={showConfirmPassword ? "text" : "password"}
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleInputChange}
+                        placeholder="Confirm your password"
+                        className="w-full py-4 rounded-full pl-4 pr-10 border border-gray-400 bg-black text-white placeholder-gray-400 outline-none focus:border-white text-sm transition-colors"
+                        style={{ fontSize: '16px' }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 hover:scale-110 transition-transform"
+                      >
+                        {showConfirmPassword ? 
+                          <EyeOff className="w-4 h-4 text-gray-400 hover:text-white transition-colors" /> : 
+                          <Eye className="w-4 h-4 text-gray-400 hover:text-white transition-colors" />
+                        }
+                      </button>
+                    </div>
+                    {formData.confirmPassword && formData.password !== formData.confirmPassword && (
+                      <p className="text-red-400 text-xs mt-1">Passwords do not match</p>
+                    )}
+                    {formData.confirmPassword && formData.password === formData.confirmPassword && formData.password && (
+                      <p className="text-green-400 text-xs mt-1">Passwords match</p>
+                    )}
+                  </div>
+
                   {error && (
-                    <div className="flex items-center p-2 bg-red-900/30 border border-red-500/50 rounded mb-4 animate-pulse">
+                    <div className="flex items-center p-2 bg-red-900/30 border border-red-500/50 rounded animate-pulse">
                       <div className="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-white text-xs">!</div>
                       <p className="text-red-400 text-xs ml-2">{error}</p>
                     </div>
                   )}
                 </div>
-              </div>
 
-              <div className="space-y-2 mt-4">
-                <button
-                  onClick={handleSubmitStep3}
-                  disabled={loading || !isStep3Valid()}
-                  className={`w-full py-4 rounded-full text-white font-semibold transition-all text-sm flex items-center justify-center transform hover:scale-105 ${
-                    loading || !isStep3Valid() ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                  style={{ backgroundColor: 'rgba(96, 60, 208, 1)' }}
-                >
-                  {loading ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                      Verifying...
-                    </>
-                  ) : (
-                    "Continue"
-                  )}
-                </button>
-                
-                <div className="text-center">
-                  {!canResend ? (
-                    <p className="text-gray-400 text-sm">
-                      Resending code in {countdown} seconds
-                    </p>
-                  ) : (
-                    <button 
-                      onClick={handleResendOtp}
-                      disabled={loading}
-                      className="underline hover:opacity-80 flex items-center justify-center mx-auto transition-opacity"
-                      style={{ color: 'rgba(96, 60, 208, 1)' }}
-                    >
-                      {loading ? (
-                        <>
-                          <Loader2 className="w-3 h-3 animate-spin mr-1" />
-                          Sending...
-                        </>
-                      ) : (
-                        "Resend Code"
-                      )}
-                    </button>
-                  )}
+                <div className="mt-4">
+                  <button
+                    onClick={handleSubmitStep4}
+                    disabled={loading || !isStep4Valid()}
+                    className={`w-full py-4 rounded-full text-white font-semibold transition-all text-sm flex items-center justify-center transform hover:scale-105 ${
+                      loading || !isStep4Valid() ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    style={{ backgroundColor: 'rgba(96, 60, 208, 1)' }}
+                  >
+                    {loading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                        Creating...
+                      </>
+                    ) : (
+                      "Continue"
+                    )}
+                  </button>
                 </div>
-              </div>
-            </>
-          ) : step === 4 ? (
-            <>
-              <div className="space-y-3">
-                <div>
-                  <label className="block text-sm mb-2 font-medium">
-                    Password
-                  </label>
-                  <div className="relative">
+              </>
+            ) : (
+              <>
+                <div className="flex items-center justify-center">
+                  <div className="w-full">
+                    <label className="block text-sm mb-2 font-medium">
+                      Display Name
+                    </label>
                     <input
-                      type={showPassword ? "text" : "password"}
-                      name="password"
-                      value={formData.password}
+                      type="text"
+                      name="displayName"
+                      value={formData.displayName}
                       onChange={handleInputChange}
-                      placeholder="Create a password"
-                      className="w-full py-4 rounded-full pl-4 pr-10 border border-gray-400 bg-black text-white placeholder-gray-400 outline-none focus:border-white text-sm transition-colors"
+                      placeholder="Enter your display name"
+                      className="w-full py-4 rounded-full pl-4 border border-gray-400 bg-black text-white placeholder-gray-400 outline-none focus:border-white text-sm transition-colors"
+                      style={{ fontSize: '16px' }}
                     />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 hover:scale-110 transition-transform"
-                    >
-                      {showPassword ? 
-                        <EyeOff className="w-4 h-4 text-gray-400 hover:text-white transition-colors" /> : 
-                        <Eye className="w-4 h-4 text-gray-400 hover:text-white transition-colors" />
-                      }
-                    </button>
-                  </div>
-                  <PasswordStrengthIndicator />
-                </div>
-
-                <div>
-                  <label className="block text-sm mb-2 font-medium">
-                    Confirm Password
-                  </label>
-                  <div className="relative">
-                    <input
-                      type={showConfirmPassword ? "text" : "password"}
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={handleInputChange}
-                      placeholder="Confirm your password"
-                      className="w-full py-4 rounded-full pl-4 pr-10 border border-gray-400 bg-black text-white placeholder-gray-400 outline-none focus:border-white text-sm transition-colors"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 hover:scale-110 transition-transform"
-                    >
-                      {showConfirmPassword ? 
-                        <EyeOff className="w-4 h-4 text-gray-400 hover:text-white transition-colors" /> : 
-                        <Eye className="w-4 h-4 text-gray-400 hover:text-white transition-colors" />
-                      }
-                    </button>
-                  </div>
-                  {formData.confirmPassword && formData.password !== formData.confirmPassword && (
-                    <p className="text-red-400 text-xs mt-1">Passwords do not match</p>
-                  )}
-                  {formData.confirmPassword && formData.password === formData.confirmPassword && formData.password && (
-                    <p className="text-green-400 text-xs mt-1">Passwords match</p>
-                  )}
-                </div>
-
-                {error && (
-                  <div className="flex items-center p-2 bg-red-900/30 border border-red-500/50 rounded animate-pulse">
-                    <div className="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-white text-xs">!</div>
-                    <p className="text-red-400 text-xs ml-2">{error}</p>
-                  </div>
-                )}
-              </div>
-
-              <div className="mt-4">
-                <button
-                  onClick={handleSubmitStep4}
-                  disabled={loading || !isStep4Valid()}
-                  className={`w-full py-4 rounded-full text-white font-semibold transition-all text-sm flex items-center justify-center transform hover:scale-105 ${
-                    loading || !isStep4Valid() ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                  style={{ backgroundColor: 'rgba(96, 60, 208, 1)' }}
-                >
-                  {loading ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                      Creating...
-                    </>
-                  ) : (
-                    "Continue"
-                  )}
-                </button>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="flex items-center justify-center">
-                <div className="w-full">
-                  <label className="block text-sm mb-2 font-medium">
-                    Display Name
-                  </label>
-                  <input
-                    type="text"
-                    name="displayName"
-                    value={formData.displayName}
-                    onChange={handleInputChange}
-                    placeholder="Enter your display name"
-                    className="w-full py-4 rounded-full pl-4 border border-gray-400 bg-black text-white placeholder-gray-400 outline-none focus:border-white text-sm transition-colors"
-                  />
                   {formData.displayName && formData.displayName.trim().length < 2 && (
                     <p className="text-red-400 text-xs mt-1">Display name must be at least 2 characters</p>
                   )}
@@ -711,6 +758,7 @@ const SignUp = ({ apiUrl }) => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 
