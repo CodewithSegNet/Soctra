@@ -43,7 +43,7 @@ export default function MobileOnboardingSteps() {
   };
 
   const handleSkip = () => {
-    navigate("/homepage");
+    navigate("/mobilehomepage");
   };
 
   const variants = {

@@ -1,18 +1,21 @@
 import { useState, useEffect } from "react";
 import { Eye, EyeOff, Loader2, ArrowLeft } from "lucide-react";
+// import { useNavigate } from "react-router-dom"; // Uncomment if using React Router
 import Warning from "../assets/warning.png";
 import GoogleIcon from "../assets/google.png";
 import AppleIcon from "../assets/apple.png";
 
-
-
-const SignUp = ({ apiUrl }) => {
-  // Mock navigation - in real app, use react-router's useNavigate
+const SignUp = ({ apiUrl, onNavigate }) => {
+  // Option 1: If using React Router (recommended)
+  // const navigate = useNavigate();
+  
+  // Option 2: If using custom navigation prop
   const navigate = (path) => {
-    console.log(`Navigate to: ${path}`);
-    // For demo purposes, show success message
-    if (path === "/") {
-      alert("Sign up completed successfully! Redirecting to homepage...");
+    if (onNavigate) {
+      onNavigate(path);
+    } else {
+      // Option 3: If using window.location (fallback)
+      window.location.href = path;
     }
   };
   
@@ -258,15 +261,22 @@ const SignUp = ({ apiUrl }) => {
       return;
     }
     setLoading(true);
+    
+    // Simulate API call
     setTimeout(() => {
       setLoading(false);
-      // Redirect to homepage after successful completion
-      navigate("/homepage");
+      // Set flag to skip onboarding and navigate to homepage
+      localStorage.setItem('hasCompletedSignup', 'true');
+      localStorage.setItem('skipOnboarding', 'true');
+      console.log("Sign up completed successfully!");
+      navigate("/mobilehomepage");
     }, 1000);
   };
 
   const handleSkip = () => {
-    navigate('/homepage');
+    // Set flag to skip onboarding when skipping signup
+    localStorage.setItem('skipOnboarding', 'true');
+    navigate('/mobilehomepage');
   };
 
   const handleSignIn = () => {
@@ -287,7 +297,7 @@ const SignUp = ({ apiUrl }) => {
   const handleGoBack = () => {
     if (step > 1) {
       transitionToStep(step - 1);
-      setError(null); // Clear any errors when going back
+      setError(null);
     }
   };
 

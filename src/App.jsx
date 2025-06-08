@@ -5,6 +5,7 @@ import SignInMobile from "./layouts/SignInMobile";
 import SignUpMobile from "./layouts/SignUpMobile";
 import SignUpDesktop from "./layouts/SignUpDesktop";
 import SignInDesktop from "./layouts/SignInDesktop";
+import MobileHomepage from "./layouts/mobilehomepage"
 import DesktopOnboardingSteps from "./components/StepOneDesktop";
 import MobileOnboardingSteps from "./components/StepOneMobile";
 
@@ -108,6 +109,18 @@ function App() {
               MobileComponent={SignUpMobile}
               DesktopComponent={SignUpDesktop}
               apiUrl={apiUrl}
+            />
+          } 
+        />
+
+
+
+              <Route 
+          path="/mobilehomepage" 
+          element={
+            <ResponsiveComponent 
+              MobileComponent={MobileHomepage}
+              DesktopComponent={DesktopOnboardingSteps}
             />
           } 
         />
