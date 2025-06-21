@@ -458,7 +458,7 @@ frame000
                   <Bell className="h-4 w-4 text-gray-300 hover:text-white cursor-pointer transition-colors" />
                 </div>
               </div>
-              <button className="flex-1 py-2 text-[12px] whitespace-nowrap px-9 bg-purple-600 rounded-full text-white font-medium hover:bg-purple-700 transition-colors">
+              <button className="flex-1 py-2 text-[12px] whitespace-nowrap px-9 bg-primary rounded-full text-white font-medium hover:bg-purple-700 transition-colors">
                 Sign Up
               </button>
               <button className="flex-1 text-[12px] whitespace-nowrap py-2 px-9 bg-purple-100 rounded-full text-purple-600 font-medium hover:bg-purple-200 transition-colors">
@@ -502,7 +502,7 @@ style={{
     
     {/* Sign Up/Sign In Buttons */}
     <div className="flex gap-3 mb-3">
-      <button className="flex-1 py-2.5 bg-purple-600 text-xs rounded-full text-white font-medium hover:bg-purple-700 transition-colors">
+      <button className="flex-1 py-2.5 bg-primary text-xs rounded-full text-white font-medium hover:bg-purple-700 transition-colors">
         Sign Up
       </button>
       <button className="flex-1 py-2.5 bg-purple-100 text-xs rounded-full text-purple-600 font-medium hover:bg-purple-200 transition-colors">
@@ -698,7 +698,7 @@ style={{
                 setAmount('');
               }}
               disabled={!amount || parseFloat(amount) <= 0}
-              className="flex-1 py-3 px-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="flex-1 py-3 px-4 bg-primary text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               Fund Wallet
             </button>
@@ -781,12 +781,12 @@ style={{
                   <div className="flex items-center gap-3">
                     <button 
                       onClick={() => setShowFundModal(true)}
-                      className="flex items-center text-[11px] justify-center gap-2 w-full py-[.5rem] whitespace-nowrap px-4 bg-purple-600 text-sm rounded-full text-white font-medium hover:bg-purple-700 transition-colors"
+                      className="flex items-center text-[11px] justify-center gap-2 w-full py-[.5rem] whitespace-nowrap px-4 bg-primary rounded-full text-white font-medium hover:bg-purple-700 transition-colors"
                     >
                       <Plus className="w-4 h-4" />
                       Fund Wallet
                     </button>
-                    <button className="flex items-center text-[11px] justify-center gap-2 w-full py-[.5rem] px-2 bg-purple-100 text-sm rounded-full text-purple-600 font-medium hover:bg-purple-200 transition-colors">
+                    <button className="flex items-center text-[11px] justify-center gap-2 w-full py-[.5rem] px-2 bg-purple-100 rounded-full text-purple-600 font-medium hover:bg-purple-200 transition-colors">
                    <img src={withdraw} className="h-4 w-4" alt="" />
                       Withdraw
                     </button>
@@ -982,7 +982,7 @@ style={{
                           <td className="py-4  whitespace-nowrap text-sm !font-[400] min-w-[180px]">
                             <div className="flex items-center gap-2">
                               <button 
-                                className="py-[12px] px-[30px] font-medium bg-purple-600 hover:bg-purple-700 text-xs text-white rounded-full transition-all duration-200 flex-shrink-0 hover:shadow-lg transform hover:scale-105"
+                                className="py-[12px] px-[30px] font-medium bg-primary hover:bg-primary text-xs text-white rounded-full transition-all duration-200 flex-shrink-0 hover:shadow-lg transform hover:scale-105"
                                 aria-label="View item"
                               >
                                 Initiate Trade
