@@ -140,6 +140,62 @@ frame000
       },
       followers: "2.1k",
       rating: 4.7
+    },
+     {
+      id: 1,
+      seller: {
+        image: ug1,
+        name: "UB.greatilx",
+        verified: true
+      },
+      item: {
+        image: ig,
+        name: "Instagram"
+      },
+      followers: "1.3k",
+      rating: 4.5
+    },
+    {
+      id: 2,
+      seller: {
+        image: ug2,
+        name: "ug.jimmy",
+        verified: true
+      },
+      item: {
+        image: tik,
+        name: "TikTok"
+      },
+      followers: "8.3k",
+      rating: 5.0
+    },
+    {
+      id: 3,
+      seller: {
+        image: ug3,
+        name: "ug.wilson",
+        verified: false
+      },
+      item: {
+        image: linkedin,
+        name: "Linkedin"
+      },
+      followers: "4.2",
+      rating: 3.8
+    },
+    {
+      id: 4,
+      seller: {
+        image: ug4,
+        name: "ug.jones",
+        verified: true
+      },
+      item: {
+        image: ig2,
+        name: "facebook"
+      },
+      followers: "2.1k",
+      rating: 4.7
     }
   ];
 
@@ -458,7 +514,7 @@ frame000
                   <Bell className="h-4 w-4 text-gray-300 hover:text-white cursor-pointer transition-colors" />
                 </div>
               </div>
-              <button className="flex-1 py-2 text-[12px] whitespace-nowrap px-9 bg-primary rounded-full text-white font-medium hover:bg-purple-700 transition-colors">
+<button className="flex-1 py-2 text-[12px] whitespace-nowrap bg-primary px-9 bg-p rounded-full text-white font-medium hover:opacity-70 transition-colors">
                 Sign Up
               </button>
               <button className="flex-1 text-[12px] whitespace-nowrap py-2 px-9 bg-purple-100 rounded-full text-purple-600 font-medium hover:bg-purple-200 transition-colors">
@@ -502,7 +558,7 @@ style={{
     
     {/* Sign Up/Sign In Buttons */}
     <div className="flex gap-3 mb-3">
-      <button className="flex-1 py-2.5 bg-primary text-xs rounded-full text-white font-medium hover:bg-purple-700 transition-colors">
+      <button className="flex-1 py-2.5 bg-primary text-xs rounded-full text-white font-medium hover:bg-opacity-70 transition-colors">
         Sign Up
       </button>
       <button className="flex-1 py-2.5 bg-purple-100 text-xs rounded-full text-purple-600 font-medium hover:bg-purple-200 transition-colors">
@@ -626,7 +682,7 @@ style={{
         <div className="space-y-6">
           {/* Selected Crypto Display */}
           <div className="flex items-center gap-3 p-4 bg-white/5 rounded-lg">
-            <div className="w-7 h-7 bg-purple-600 rounded-full flex items-center justify-center">
+            <div className="w-7 h-7 rounded-full flex items-center justify-center">
               <img 
                 className="w-6 h-6" 
                 src={cryptoImages[selectedCrypto.name] || cryptoImages[selectedCrypto.symbol] || btc} 
@@ -672,7 +728,7 @@ style={{
                 <button
                   key={quickAmount}
                   onClick={() => setAmount(quickAmount)}
-                  className="py-2 px-3 bg-white/5 hover:bg-white/10 rounded-lg text-sm transition-colors"
+                  className="py-2 px-3 bg-white/5 hover:bg-white/10 rounded-full text-sm transition-colors"
                 >
                   {quickAmount}
                 </button>
@@ -684,7 +740,7 @@ style={{
           <div className="flex gap-3 pt-4">
             <button
               onClick={() => setModalStep(1)}
-              className="flex-1 py-3 px-4 border border-white/20 text-white rounded-lg hover:bg-white/5 transition-colors"
+              className="flex-1 py-3 px-4 border border-white/20 text-white rounded-full hover:bg-white/5 transition-colors"
             >
               Back
             </button>
@@ -698,7 +754,7 @@ style={{
                 setAmount('');
               }}
               disabled={!amount || parseFloat(amount) <= 0}
-              className="flex-1 py-3 px-4 bg-primary text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="flex-1 py-3 px-4 bg-primary text-white rounded-full hover:bg-opacity-70 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               Fund Wallet
             </button>
@@ -781,7 +837,7 @@ style={{
                   <div className="flex items-center gap-3">
                     <button 
                       onClick={() => setShowFundModal(true)}
-                      className="flex items-center text-[11px] justify-center gap-2 w-full py-[.5rem] whitespace-nowrap px-4 bg-primary rounded-full text-white font-medium hover:bg-purple-700 transition-colors"
+                      className="flex items-center text-[11px] justify-center gap-2 w-full py-[.5rem] whitespace-nowrap px-4 bg-primary rounded-full text-white font-medium hover:bg-opacity-70 transition-colors"
                     >
                       <Plus className="w-4 h-4" />
                       Fund Wallet
