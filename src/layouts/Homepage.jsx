@@ -1015,9 +1015,9 @@ style={{
                           {/* Metric Column */}
                           <td className="py-4 px-6 whitespace-nowrap text-sm !font-[400] min-w-[120px]">
                             <div className="flex items-center gap-1 text-white">
-                              <div className="text-xs text-gray-400 uppercase tracking-wide font-medium">
+                              {/* <div className="text-xs text-gray-400 uppercase tracking-wide font-medium">
                                 Followers
-                              </div>
+                              </div> */}
                               <div className="flex items-center pb-[5px] font-semibold text-xs mt-1">
                                 {row.followers.toLocaleString()}
                               </div>
