@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/SoctralbgLogo.png";
 import Card from "../components/OnboardingDesktopCard";
 import one from "../assets/1.svg";
@@ -10,6 +11,7 @@ import SignUp from "../layouts/SignUpDesktop";
 export default function DesktopOnboardingSteps() {
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
+  const navigate = useNavigate();
 
   const openSignIn = () => {
     setShowSignIn(true);
@@ -21,6 +23,10 @@ export default function DesktopOnboardingSteps() {
     setShowSignIn(false);  // Close Sign In when Sign Up is opened
   };
 
+  const handleSkip = () => {
+    navigate("/homepage");
+  };
+
   return (
     <>
       <div className="bg-tertiary relative w-screen h-screen overflow-visible">
@@ -28,7 +34,7 @@ export default function DesktopOnboardingSteps() {
           {/* Top Row */}
           <div className="flex justify-between items-center w-full mb-2">
             <img src={logo} alt="Soctra Logo" className="w-8 h-8 object-contain" />
-            <p className="text-white cursor-pointer text-xs font-normal">Skip</p>
+            <p className="text-white cursor-pointer text-xs font-normal" onClick={handleSkip}>Skip</p>
           </div>
 
           {/* Welcome Text */}

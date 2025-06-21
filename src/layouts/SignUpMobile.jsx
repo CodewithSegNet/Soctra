@@ -269,14 +269,14 @@ const SignUp = ({ apiUrl, onNavigate }) => {
       localStorage.setItem('hasCompletedSignup', 'true');
       localStorage.setItem('skipOnboarding', 'true');
       console.log("Sign up completed successfully!");
-      navigate("/mobilehomepage");
+      navigate("/homepage");
     }, 1000);
   };
 
   const handleSkip = () => {
     // Set flag to skip onboarding when skipping signup
     localStorage.setItem('skipOnboarding', 'true');
-    navigate('/mobilehomepage');
+    navigate('/homepage');
   };
 
   const handleSignIn = () => {

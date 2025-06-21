@@ -9,6 +9,10 @@ import MobileHomepage from "./layouts/mobilehomepage"
 import DesktopOnboardingSteps from "./components/StepOneDesktop";
 import MobileOnboardingSteps from "./components/StepOneMobile";
 
+import Homepage from "./layouts/Homepage";
+
+
+
 // Custom hook for responsive detection
 const useResponsive = () => {
   const [isDesktop, setIsDesktop] = useState(false);
@@ -92,6 +96,19 @@ function App() {
             />
           } 
         />
+
+
+        <Route 
+          path="/homepage" 
+          element={
+            <ResponsiveComponent 
+              MobileComponent={MobileHomepage}
+              DesktopComponent={Homepage}
+            />
+          } 
+        />
+
+
         <Route 
           path="/sign-in" 
           element={
@@ -115,7 +132,7 @@ function App() {
 
 
 
-              <Route 
+              {/* <Route 
           path="/mobilehomepage" 
           element={
             <ResponsiveComponent 
@@ -123,7 +140,10 @@ function App() {
               DesktopComponent={DesktopOnboardingSteps}
             />
           } 
-        />
+        /> */}
+
+
+        
       </Routes>
     </BrowserRouter>
   );
